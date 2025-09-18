@@ -1,0 +1,55 @@
+### Health
+GET http://127.0.0.1:8000/
+
+### Create a shop
+POST http://127.0.0.1:8000/shops
+Content-Type: application/json
+
+{
+  "name": "La Bicicletta",
+  "address": "123 Rue de Velo",
+  "lat": 43.61,
+  "lng": 3.88,
+  "is_cyclist_friendly": true,
+  "notes": "Sunday stop"
+}
+
+### List shops
+GET http://127.0.0.1:8000/shops
+
+### Create a ride
+POST http://127.0.0.1:8000/rides
+Content-Type: application/json
+
+{
+  "title": "Evening Spin",
+  "date_time": "2025-09-18T18:00:00",
+  "pace": "moderate",
+  "distance_km": 40,
+  "start_lat": 43.61,
+  "start_lng": 3.88,
+  "coffee_shop_id": 1
+}
+
+### List rides
+GET http://127.0.0.1:8000/rides
+
+### Get ride 1
+GET http://127.0.0.1:8000/rides/1
+
+### Update ride 1
+PUT http://127.0.0.1:8000/rides/1
+Content-Type: application/json
+
+{
+  "title": "Morning Long Ride",
+  "date_time": "2025-09-19T09:00:00",
+  "pace": "easy",
+  "distance_km": 80,
+  "start_lat": 43.61,
+  "start_lng": 3.88,
+  "coffee_shop_id": 1
+}
+
+### Delete ride 1
+DELETE http://127.0.0.1:8000/rides/1
