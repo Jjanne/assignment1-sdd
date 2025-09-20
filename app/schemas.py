@@ -5,8 +5,7 @@ from pydantic import BaseModel
 class CoffeeShopCreate(BaseModel):
     name: str
     address: str
-    lat: float
-    lng: float
+    start_location: str
     is_cyclist_friendly: bool = True
     notes: Optional[str] = None
 
@@ -18,8 +17,7 @@ class GroupRideCreate(BaseModel):
     date_time: datetime
     pace: str
     distance_km: float
-    start_lat: float
-    start_lng: float
+    start_location: str
     coffee_shop_id: Optional[int] = None
 
 class GroupRideRead(GroupRideCreate):

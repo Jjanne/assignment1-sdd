@@ -8,26 +8,25 @@ Content-Type: application/json
 {
   "name": "La Bicicletta",
   "address": "123 Rue de Velo",
-  "lat": 43.61,
-  "lng": 3.88,
   "is_cyclist_friendly": true,
   "notes": "Sunday stop"
 }
 
+
+
 ### List shops
 GET http://127.0.0.1:8000/shops
 
-### Create a ride
+### Create a ride (string start_location)
 POST http://127.0.0.1:8000/rides
 Content-Type: application/json
 
 {
-  "title": "Evening Spin",
-  "date_time": "2025-09-18T18:00:00",
-  "pace": "moderate",
-  "distance_km": 40,
-  "start_lat": 43.61,
-  "start_lng": 3.88,
+  "title": "Madrid Evening Ride",
+  "date_time": "2025-09-20T18:00:00",
+  "pace": "Easy",
+  "distance_km": 45,
+  "start_location": "Retiro Park, Madrid",
   "coffee_shop_id": 1
 }
 

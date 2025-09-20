@@ -8,7 +8,7 @@ router = APIRouter(prefix="/shops", tags=["shops"])
 
 @router.post("", response_model=CoffeeShopRead)
 def create_shop(data: CoffeeShopCreate):
-    shop = CoffeeShop(**data.dict())
+    shop = CoffeeShop(**data.model_dump())
     with Session(engine) as session:
         session.add(shop)
         session.commit()
@@ -34,7 +34,7 @@ def update_shop(shop_id: int, data: CoffeeShopCreate):
         shop = session.get(CoffeeShop, shop_id)
         if not shop:
             raise HTTPException(404, "Shop not found")
-        for k, v in data.dict().items():
+        for k, v in data.model_dump(exclude_unset=True).items():
             setattr(shop, k, v)
         session.add(shop)
         session.commit()
