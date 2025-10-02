@@ -18,3 +18,4 @@ class GroupRide(SQLModel, table=True):
     distance_km: float
     start_location: str
     coffee_shop_id: Optional[int] = Field(default=None, foreign_key="coffeeshop.id")
+    notes: Optional[str] = None

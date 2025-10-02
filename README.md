@@ -1,7 +1,7 @@
 # Ride Planner API (Assignment 1 – SD&D)
 
 A minimal **FastAPI** application that manages **cycling group rides** and **coffee shops**.  
-It demonstrates REST API design, database persistence with SQLite, and clean modular structure.
+It uses REST API design, database persistence with SQLite, and clean modular structure.
 
 ---
 
@@ -36,6 +36,7 @@ assignment1-sdd/
 │── requests.http        # Example HTTP requests
 │── requirements.txt     # Dependencies
 │── README.md            # Documentation
+│── REPORT.md            # SDLC choice and DevOps reflection
 │── rideplanner.sqlite3  # SQLite database
 
 ---
@@ -47,8 +48,7 @@ classDiagram
         +int id
         +str name
         +str address
-        +float lat
-        +float lng
+        +str start_location
         +bool is_cyclist_friendly
         +str notes
     }
@@ -59,8 +59,7 @@ classDiagram
         +datetime date_time
         +str pace
         +float distance_km
-        +float start_lat
-        +float start_lng
+        +str start_location
         +int coffee_shop_id
         +str notes
     }
@@ -71,12 +70,16 @@ classDiagram
         +create_shop()
         +list_shops()
         +get_shop()
+        +update_shop()
+        +delete_shop()
     }
 
     class RideRouter {
         +create_ride()
         +list_rides(pace, on_date)
         +get_ride()
+        +update_ride()
+        +delete_ride()
     }
 
     ShopRouter --> CoffeeShop
@@ -91,8 +94,14 @@ classDiagram
 - `POST /shops` → Create a new coffee shop  
 - `GET /shops` → List all coffee shops  
 - `GET /shops/{id}` → Get details of a specific coffee shop  
+- `PUT /shops/{id}` → Update a coffee shop 
+- `DELETE /shops/{id}` → Delete a coffee shop
 
 ### Group Rides
 - `POST /rides` → Create a new group ride  
 - `GET /rides` → List all group rides (filters: pace, date)  
 - `GET /rides/{id}` → Get details of a specific group ride
+- `PUT /rides/{id}` → Update a ride
+- `DELETE /rides/{id}` → Delete a ride
+
+See REPORT.md for SDLC choice and DevOps reflection.

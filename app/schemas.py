@@ -19,6 +19,7 @@ class GroupRideCreate(BaseModel):
     distance_km: float
     start_location: str
     coffee_shop_id: Optional[int] = None
+    notes: Optional[str] = None
 
 class GroupRideRead(GroupRideCreate):
     id: int
