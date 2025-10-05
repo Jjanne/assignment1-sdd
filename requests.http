@@ -1,54 +1,110 @@
-### Health
+### Health check
 GET http://127.0.0.1:8000/
 
-### Create a shop
+### --------- COFFEE SHOPS ---------
+
+### Create shop
 POST http://127.0.0.1:8000/shops
 Content-Type: application/json
 
 {
-  "name": "La Bicicletta",
-  "address": "123 Rue de Velo",
+  "name": "La Bicicleta Café",
+  "address": "Plaza de San Ildefonso, Madrid",
+  "start_location": "Malasaña - plaza corner",
   "is_cyclist_friendly": true,
-  "notes": "Sunday stop"
+  "notes": "Big tables, friendly to groups."
 }
 
+### Create another shop
+POST http://127.0.0.1:8000/shops
+Content-Type: application/json
 
+{
+  "name": "Federal Café",
+  "address": "Pl. del Comte de Barcellona, Madrid",
+  "start_location": "Lavapiés - near the square",
+  "is_cyclist_friendly": true,
+  "notes": "Outdoor seating."
+}
 
 ### List shops
 GET http://127.0.0.1:8000/shops
 
-### Create a ride (string start_location)
+### Get shop by id
+GET http://127.0.0.1:8000/shops/1
+
+### Update shop
+PUT http://127.0.0.1:8000/shops/1
+Content-Type: application/json
+
+{
+  "name": "La Bicicleta Café (Updated)",
+  "address": "Plaza de San Ildefonso, Madrid",
+  "start_location": "Malasaña - plaza corner",
+  "is_cyclist_friendly": true,
+  "notes": "Now with bike racks."
+}
+
+### Delete shop
+DELETE http://127.0.0.1:8000/shops/2
+
+
+
+### --------- GROUP RIDES ---------
+
+### Create ride (valid coffee_shop_id)
 POST http://127.0.0.1:8000/rides
 Content-Type: application/json
 
 {
-  "title": "Madrid Evening Ride",
-  "date_time": "2025-09-20T18:00:00",
-  "pace": "Easy",
-  "distance_km": 45,
-  "start_location": "Retiro Park, Madrid",
-  "coffee_shop_id": 1
+  "title": "Evening Shakeout",
+  "date_time": "2025-10-05T18:30:00",
+  "pace": "easy",
+  "distance_km": 8.5,
+  "start_location": "Retiro Park main gate",
+  "coffee_shop_id": 1,
+  "notes": "Social pace, regroup at lights."
 }
 
-### List rides
+### Create ride (invalid coffee_shop_id -> expect 400)
+POST http://127.0.0.1:8000/rides
+Content-Type: application/json
+
+{
+  "title": "Sunday Coffee Ride",
+  "date_time": "2025-10-05T09:00:00",
+  "pace": "moderate",
+  "distance_km": 35.0,
+  "start_location": "Temple of Debod",
+  "coffee_shop_id": 9999,
+  "notes": "Rolling hills."
+}
+
+### List all rides
 GET http://127.0.0.1:8000/rides
 
-### Get ride 1
+### Filter rides by date (uses day-bounded range)
+GET http://127.0.0.1:8000/rides?on_date=2025-10-05
+
+### Filter rides by pace
+GET http://127.0.0.1:8000/rides?pace=easy
+
+### Get ride by id
 GET http://127.0.0.1:8000/rides/1
 
-### Update ride 1
+### Update ride (also checks coffee_shop_id validity)
 PUT http://127.0.0.1:8000/rides/1
 Content-Type: application/json
 
 {
-  "title": "Morning Long Ride",
-  "date_time": "2025-09-19T09:00:00",
-  "pace": "easy",
-  "distance_km": 80,
-  "start_lat": 43.61,
-  "start_lng": 3.88,
-  "coffee_shop_id": 1
+  "title": "Evening Shakeout (revised)",
+  "date_time": "2025-10-05T18:45:00",
+  "pace": "moderate",
+  "distance_km": 10.0,
+  "start_location": "Retiro Park main gate",
+  "coffee_shop_id": 1,
+  "notes": "Slightly longer loop."
 }
 
-### Delete ride 1
+### Delete ride
 DELETE http://127.0.0.1:8000/rides/1

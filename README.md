@@ -3,8 +3,6 @@
 A minimal **FastAPI** application that manages **cycling group rides** and **coffee shops**.  
 It uses REST API design, database persistence with SQLite, and clean modular structure.
 
----
-
 ## Setup & Run
 
 # 1. Create and activate virtual environment
@@ -19,8 +17,6 @@ uvicorn app.main:app --reload
 
 The API will be available at: [http://127.0.0.1:8000](http://127.0.0.1:8000)  
 Interactive docs: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-
----
 
 ## Project Structure
 
@@ -38,8 +34,6 @@ assignment1-sdd/
 │── README.md            # Documentation
 │── REPORT.md            # SDLC choice and DevOps reflection
 │── rideplanner.sqlite3  # SQLite database
-
----
 
 ## Architecture Design
 
@@ -85,9 +79,6 @@ classDiagram
     ShopRouter --> CoffeeShop
     RideRouter --> GroupRide
 
-
----
-
 ## API Endpoints
 
 ### Coffee Shops
@@ -104,4 +95,9 @@ classDiagram
 - `PUT /rides/{id}` → Update a ride
 - `DELETE /rides/{id}` → Delete a ride
 
+## Report 
 See REPORT.md for SDLC choice and DevOps reflection.
+
+### Run tests
+```bash
+pytest -q

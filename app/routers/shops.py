@@ -6,7 +6,7 @@ from ..schemas import CoffeeShopCreate, CoffeeShopRead
 
 router = APIRouter(prefix="/shops", tags=["shops"])
 
-@router.post("", response_model=CoffeeShopRead)
+@router.post("", response_model=CoffeeShopRead, status_code=201)
 def create_shop(data: CoffeeShopCreate):
     shop = CoffeeShop(**data.model_dump())
     with Session(engine) as session:

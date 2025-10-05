@@ -12,7 +12,7 @@ router = APIRouter(prefix="/rides", tags=["rides"])
 def create_ride(data: GroupRideCreate):
     ride = GroupRide(**data.model_dump())
     with Session(engine) as session:
-        # Helpful error message if FK doesn't exist
+        #if FK doesn't exist
         if ride.coffee_shop_id is not None:
             from ..models import CoffeeShop
             if session.get(CoffeeShop, ride.coffee_shop_id) is None:
@@ -31,7 +31,7 @@ def list_rides(pace: Optional[str] = Query(None), on_date: Optional[date] = Quer
         stmt = select(GroupRide)
         if pace:
             stmt = stmt.where(GroupRide.pace == pace)
-        # Robust on_date filter using a day range (fixes the .date() issue)
+        # Robust on_date filter
         if on_date:
             start_dt = datetime.combine(on_date, time(0, 0, 0))
             end_dt = start_dt + timedelta(days=1)
