@@ -1,33 +1,30 @@
 # Report – Assignment 1 (SD&D)
 
-## SDLC Model Choice and Justification
+## SDLC Model: Iterative & Incremental (“Agile-lite”)
 
-**Chosen Model:** Iterative & Incremental (Agile-lite)
+I built this in short, repeatable cycles: stand up a thin vertical slice (CRUD + SQLite), test it, then layer on small changes (filters, clearer errors, docs). That rhythm worked well for a small, single-developer project.
 
-**Justification:**  
-This project was developed in small, incremental cycles where a minimal version of the system (CRUD endpoints + database persistence) was built first and then extended with new features (filters, error handling, documentation). This approach is well-suited for a small student project because:  
+**Why this model fits here**
+- **Small scope, fast change:** Requirements shift (e.g., swapping `lat/lng` for `start_location`) without derailing the plan.
+- **Continuous verification:** After each change I could run the app, hit `/docs`, and add/adjust tests.
+- **Low ceremony:** Minimal overhead, maximum momentum—ideal for a course assignment with a tight timeline.
+- **Risk control:** There’s always a working baseline; each iteration is a safe, incremental improvement.
 
-- The scope is limited, so heavy upfront planning (like Waterfall) is unnecessary.  
-- It allows quick feedback and fast fixes when requirements change (e.g., switching from `lat/lng` to `start_location`).  
-- Testing and verification happen continuously after each iteration, reducing risk of large-scale failures.  
-- It keeps overhead low while still encouraging disciplined progress.  
-
-Overall, the iterative model ensures a working system is always available and improvements can be added step by step.
+Result: I always had something working, and improvements landed in manageable, well-tested steps.
 
 ---
 
-## Reflection: Scaling and Adapting for DevOps
+## Reflection: How I’d scale this with DevOps practices
 
-If this project were to be developed further in a professional environment, it could be adapted for **DevOps practices** as follows:  
+If this evolved beyond a class project, here’s how I’d productionize it:
 
-- **Continuous Integration (CI):** Automate linting, testing, and build processes on every commit (e.g., with GitHub Actions).  
-- **Automated Testing:** Add unit and integration tests for routers, database operations, and request flows.  
-- **Database Migrations:** Use Alembic for versioned schema changes, ensuring smooth upgrades across environments.  
-- **Configuration Management:** Replace hard-coded SQLite URL with environment variables to support multiple environments (dev, staging, production).  
-- **Containerization:** Package the app with Docker for consistent deployments.  
-- **Monitoring & Observability:** Add structured logging, health checks, and error tracking to improve reliability.  
-- **Release Management:** Version the API (e.g., `/v1`) and maintain a changelog so clients can upgrade safely.  
+- **CI on every commit:** Run linting and tests (with coverage) in GitHub Actions. Fail the build if coverage drops below the agreed threshold (e.g., 90%).
+- **Stronger automated tests:** Keep CRUD tests, add edge cases (bad IDs, invalid payloads), and a few integration tests that exercise the DB path end-to-end.
+- **Database migrations:** Introduce **Alembic** so schema changes (like adding indexes or new fields) are versioned and repeatable across dev/staging/prod.
+- **12-factor config:** Read `DATABASE_URL` and other settings from environment variables; never hard-code secrets.
+- **Containerization:** Ship a small Docker image so dev/prod environments are consistent; use a volume for SQLite (or switch to Postgres in staging/prod).
+- **Observability:** Add structured logs, a `/health` endpoint, and basic error tracking. Later, layer in request metrics or OpenTelemetry if needed.
+- **Release management:** Version the API (e.g., `/v1`), keep a CHANGELOG, and treat breaking changes as formal, versioned releases.
+- **Security + hygiene:** Pin dependencies, enable CORS only where needed, validate inputs at the boundary (Pydantic), and review dependency alerts.
 
-These adaptations would make the system more maintainable, scalable, and ready for deployment in real-world settings.
-
----
+These steps make the service easier to change, safer to deploy, and more transparent when something goes wrong—without losing the simplicity that made it quick to build.
